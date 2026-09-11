@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Объекты — Синие лопасти</title>
+  <meta name="theme-color" content="#0A0C10">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/site.css">
+</head>
+<body class="has-cta">
+  <header class="header solid">
+    <div class="header-inner">
+      <a class="brand" href="index.html" aria-label="Синие лопасти">
+        <svg viewBox="0 0 32 32" fill="currentColor"><circle cx="16" cy="16" r="2.35"/><path d="M14.35 3.4h3.3c.55 0 .95.45.95 1v8.55c0 .7-.55 1.2-1.25 1.2h-2.7c-.7 0-1.25-.5-1.25-1.2V4.4c0-.55.4-1 .95-1Z"/><path d="M14.35 3.4h3.3c.55 0 .95.45.95 1v8.55c0 .7-.55 1.2-1.25 1.2h-2.7c-.7 0-1.25-.5-1.25-1.2V4.4c0-.55.4-1 .95-1Z" transform="rotate(90 16 16)"/><path d="M14.35 3.4h3.3c.55 0 .95.45.95 1v8.55c0 .7-.55 1.2-1.25 1.2h-2.7c-.7 0-1.25-.5-1.25-1.2V4.4c0-.55.4-1 .95-1Z" transform="rotate(180 16 16)"/><path d="M14.35 3.4h3.3c.55 0 .95.45.95 1v8.55c0 .7-.55 1.2-1.25 1.2h-2.7c-.7 0-1.25-.5-1.25-1.2V4.4c0-.55.4-1 .95-1Z" transform="rotate(270 16 16)"/></svg>
+        <span class="wordmark">Синие лопасти</span>
+      </a>
+      <nav class="nav-desk"><a class="active" href="objects.html">Объекты</a><a href="technology.html">Технология</a><a href="contacts.html">Контакты</a></nav>
+      <div class="header-actions">
+        <a class="phone-desk" href="tel:+73833124010">+7 (383) 312-40-10</a>
+        <a class="btn btn-primary btn-smeta-desk" href="contacts.html">Смета</a>
+        <button class="menu-btn" id="menuBtn" type="button" aria-label="Открыть меню">☰</button>
+      </div>
+    </div>
+  </header>
+  <div class="menu" id="menu">
+    <nav>
+      <a href="objects.html">Объекты</a>
+      <a href="technology.html">Технология</a>
+      <a href="contacts.html">Контакты</a>
+      <a href="index.html#smeta">Смета</a>
+    </nav>
+    <a class="call" href="tel:+73833124010">+7 (383) 312-40-10</a>
+  </div>
+
+  <div id="objList" class="page">
+    <div class="wrap">
+      <p class="kicker">Портфель</p>
+      <h1 class="title">Объекты</h1>
+      <p class="muted" style="max-width:36rem">Склады, цеха, паркинги и холод. Площади от трёх до двадцати тысяч квадратов — одни и те же лопасти, разный пирог.</p>
+      <div class="filters">
+        <button class="chip on" data-filter="all" type="button">Все</button>
+        <button class="chip" data-filter="warehouse" type="button">Склад</button>
+        <button class="chip" data-filter="production" type="button">Производство</button>
+        <button class="chip" data-filter="parking" type="button">Паркинг</button>
+        <button class="chip" data-filter="cold" type="button">Холод</button>
+      </div>
+      <div class="obj-grid" id="objGrid"></div>
+    </div>
+  </div>
+  <div id="objDetail" class="hidden" style="padding-bottom:4rem"></div>
+
+  <div class="mobile-cta">
+    <a class="call" href="tel:+73833124010">Звонок</a>
+    <a class="smeta" href="contacts.html">Смета</a>
+  </div>
+  <script src="js/site.js"></script>
+</body>
+</html>
