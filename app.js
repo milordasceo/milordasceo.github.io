@@ -1,5 +1,8 @@
-const BASE = "/sinie-lopasti";
-const img = (n) => `${BASE}/images/${n}`;
+const ASSET = (() => {
+  const s = document.currentScript;
+  return new URL("./", s && s.src ? s.src : location.href).href;
+})();
+const img = (n) => new URL("images/" + n, ASSET).href;
 
 const company = {
   name: "Синие лопасти",
@@ -82,17 +85,18 @@ const slabRate = 3800;
 const rub = (n) => new Intl.NumberFormat("ru-RU", { style: "currency", currency: "RUB", maximumFractionDigits: 0 }).format(n);
 const meters = (n) => new Intl.NumberFormat("ru-RU").format(n) + " м²";
 const path = () => {
-  const raw = location.pathname.replace(BASE, "") || "/";
-  return raw.endsWith("/") && raw.length > 1 ? raw.slice(0, -1) : raw || "/";
+  const h = location.hash.slice(1);
+  if (!h || h === "/") return "/";
+  return h.startsWith("/") ? h.split("?")[0] : "/" + h;
 };
 const go = (to) => {
-  history.pushState({}, "", BASE + to);
-  render();
-  window.scrollTo(0, 0);
+  const next = to.startsWith("/") ? to : "/" + to;
+  if (location.hash === "#" + next) render();
+  else location.hash = "#" + next;
 };
 
 function logo() {
-  return `<a class="logo" href="${BASE}/" data-link>
+  return `<a class="logo" href="#/" data-link>
     <svg viewBox="0 0 36 36" aria-hidden="true">
       <circle cx="18" cy="18" r="16.5" fill="none" stroke="currentColor" stroke-opacity="0.28"/>
       <path d="M18 7.2c4.4 2.2 7.6 6.6 7.6 10.8 0 2.6-1.2 4.6-3.2 5.4" fill="none" stroke="#3b6ee8" stroke-width="2.2" stroke-linecap="round"/>
@@ -107,9 +111,9 @@ function header(p) {
   return `<header class="site" id="hdr">
     <div class="header-inner">
       ${logo()}
-      <nav class="nav-desk">${nav.slice(1).map(([t,l]) => `<a href="${BASE}${t}" data-link class="${p===t?"active":""}">${l}</a>`).join("")}</nav>
+      <nav class="nav-desk">${nav.slice(1).map(([t,l]) => `<a href="#${t}" data-link class="${p===t?"active":""}">${l}</a>`).join("")}</nav>
       <div class="header-actions">
-        <a class="btn btn-blade header-cta" href="${BASE}/contacts" data-link>Заявка</a>
+        <a class="btn btn-blade header-cta" href="#/contacts" data-link>Заявка</a>
         <button class="burger" type="button" aria-label="Меню" id="burger">
           <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
         </button>
@@ -117,11 +121,11 @@ function header(p) {
     </div>
   </header>
   <div class="mobile-nav" id="mnav">
-    ${nav.map(([t,l]) => `<a class="big" href="${BASE}${t}" data-link>${l}</a>`).join("")}
+    ${nav.map(([t,l]) => `<a class="big" href="#${t}" data-link>${l}</a>`).join("")}
     <div class="bottom">
       <a href="${company.phoneHref}">${company.phone}</a>
       <p>${company.address}</p>
-      <a class="btn btn-blade btn-wide" href="${BASE}/contacts" data-link>Оставить заявку</a>
+      <a class="btn btn-blade btn-wide" href="#/contacts" data-link>Оставить заявку</a>
     </div>
   </div>`;
 }
@@ -130,7 +134,7 @@ function footer() {
   return `<footer class="site"><div class="wrap">
     <div class="foot-grid">
       <div>${logo()}<p class="muted" style="margin-top:1.5rem;max-width:24rem;font-size:.9rem;line-height:1.6">Промышленные бетонные полы методом стопинга. Новосибирск и Сибирь. Плита, швы, ровность — затем синие лопасти.</p></div>
-      <div><p class="meta">Разделы</p>${nav.map(([t,l]) => `<div style="margin-top:.5rem"><a class="muted" href="${BASE}${t}" data-link>${l}</a></div>`).join("")}</div>
+      <div><p class="meta">Разделы</p>${nav.map(([t,l]) => `<div style="margin-top:.5rem"><a class="muted" href="#${t}" data-link>${l}</a></div>`).join("")}</div>
       <div><p class="meta">Связь</p>
         <p style="margin:.75rem 0 0"><a href="${company.phoneHref}">${company.phone}</a></p>
         <p style="margin:.35rem 0 0"><a class="muted" href="${company.phone2Href}">${company.phone2}</a></p>
@@ -143,7 +147,7 @@ function footer() {
   </div></footer>
   <div class="cta-bar">
     <a class="btn btn-outline" href="${company.phoneHref}">Звонок</a>
-    <a class="btn btn-blade" href="${BASE}/contacts" data-link>Заявка</a>
+    <a class="btn btn-blade" href="#/contacts" data-link>Заявка</a>
   </div>`;
 }
 
@@ -210,8 +214,8 @@ function pageHome() {
       <h1 class="display">Пол, о котором забывают</h1>
       <p class="lead">Стопинг — упрочнённый слой, втёртый в живой бетон. Склады, производства, холодильники и паркинги от 800 м².</p>
       <div class="actions">
-        <a class="btn btn-blade" href="${BASE}/contacts" data-link style="min-height:3.5rem">Рассчитать объект</a>
-        <a class="btn btn-outline" href="${BASE}/objects" data-link style="min-height:3.5rem">Смотреть объекты</a>
+        <a class="btn btn-blade" href="#/contacts" data-link style="min-height:3.5rem">Рассчитать объект</a>
+        <a class="btn btn-outline" href="#/objects" data-link style="min-height:3.5rem">Смотреть объекты</a>
       </div>
     </div>
   </section>
@@ -225,15 +229,15 @@ function pageHome() {
   </section>
   <section class="paper section"><div class="wrap">
     <div class="flex-end"><div><p class="meta">Что устраиваем</p><h2 class="headline" style="margin-top:.75rem">Полы под работу</h2></div>
-      <a class="btn btn-ink" href="${BASE}/technology" data-link>Технология стопинга</a></div>
-    <div class="cards">${services.map(([s,t,l,i]) => `<a class="card" href="${BASE}/technology#${s}" data-link>
+      <a class="btn btn-ink" href="#/technology" data-link>Технология стопинга</a></div>
+    <div class="cards">${services.map(([,t,l,i]) => `<a class="card" href="#/technology" data-link>
       <img src="${img(i)}" alt="">
       <div class="pad"><h3>${t}</h3><p>${l}</p></div>
     </a>`).join("")}</div>
   </div></section>
   <section class="section wrap">
     <div class="flex-end"><div><p class="meta" style="color:var(--blade)">Шесть окон</p><h2 class="headline" style="margin-top:.75rem">Пока бетон живой</h2></div>
-      <a class="btn btn-outline" href="${BASE}/process" data-link>Весь процесс</a></div>
+      <a class="btn btn-outline" href="#/process" data-link>Весь процесс</a></div>
     <div class="steps">${processSteps.map(([n,t,x,i]) => `<article class="step"><div class="rel"><img src="${img(i)}" alt=""><span class="badge">${n}</span></div><h3>${t}</h3><p>${x}</p></article>`).join("")}</div>
   </section>
   <section>
@@ -243,12 +247,12 @@ function pageHome() {
         <p class="lead" style="color:rgba(237,233,225,.75);max-width:28rem">Если через год вспоминают только логистику, а не трещины — мы сделали свою работу.</p>
       </div>
     </div>
-    <div class="feat wrap">${objects.slice(0,3).map((o) => `<a href="${BASE}/objects/${o.slug}" data-link>
+    <div class="feat wrap">${objects.slice(0,3).map((o) => `<a href="#/objects/${o.slug}" data-link>
       <p class="meta">${o.place} · ${o.year}</p><h3 class="title" style="margin-top:.75rem">${o.title}</h3>
       <p class="muted" style="margin-top:.75rem;font-size:.9rem">${o.summary}</p>
       <p style="margin-top:1.5rem">${meters(o.area)}</p>
     </a>`).join("")}</div>
-    <div class="wrap" style="padding-top:2.5rem;padding-bottom:2.5rem"><a class="btn btn-outline" href="${BASE}/objects" data-link>Все объекты</a></div>
+    <div class="wrap" style="padding-top:2.5rem;padding-bottom:2.5rem"><a class="btn btn-outline" href="#/objects" data-link>Все объекты</a></div>
   </section>
   <section class="surface section"><div class="wrap grid-12">
     <div class="col-5"><p class="meta" style="color:var(--blade)">Заявка</p><h2 class="headline" style="margin-top:.75rem">Пришлите площадь — посчитаем карту</h2>
@@ -276,7 +280,7 @@ function pageTech() {
     <div class="col-6"><p class="meta" style="color:var(--blade)">0${idx+1}</p><h2 class="headline" style="margin-top:.75rem">${t}</h2><p class="muted" style="margin-top:1rem">${l}</p></div>
   </article>`).join("")}</section>
   <section class="paper section"><div class="wrap flex-end"><div><h2 class="headline">Нужен расчёт смеси</h2><p class="muted" style="margin-top:.75rem">Напишите нагрузку и режим — скажем, кварц или уже корунд.</p></div>
-    <a class="btn btn-ink" href="${BASE}/contacts" data-link>Оставить заявку</a></div></section>`;
+    <a class="btn btn-ink" href="#/contacts" data-link>Оставить заявку</a></div></section>`;
 }
 
 function pageProcess() {
@@ -290,7 +294,7 @@ function pageProcess() {
   <section class="section" style="border-top:1px solid var(--border)"><div class="wrap">
     <h2 class="headline">Что нужно от вас до заезда</h2>
     <div class="cards" style="grid-template-columns:1fr">${["Закрытый контур или погода без минуса","Подтверждённый бетон и непрерывная подача","Понимание техники: стеллаж, VNA, доки, холод"].map((t) => `<div style="border:1px solid var(--border);background:var(--surface);padding:1.25rem;color:var(--muted);font-size:.9rem">${t}</div>`).join("")}</div>
-    <a class="btn btn-blade" href="${BASE}/contacts" data-link style="margin-top:2.5rem">Запросить график заливки</a>
+    <a class="btn btn-blade" href="#/contacts" data-link style="margin-top:2.5rem">Запросить график заливки</a>
   </div></section>`;
 }
 
@@ -298,7 +302,7 @@ function pageObjects() {
   return `<section class="section wrap" style="padding-top:7rem"><p class="meta" style="color:var(--blade)">Портфолио</p>
     <h1 class="display" style="margin-top:1rem">Объекты</h1>
     <p class="lead" style="margin-top:1.25rem;max-width:32rem">Склады, пища, холод, паркинги, цеха. Разные смеси, одна дисциплина окна затирки.</p></section>
-  <section class="wrap" style="padding-bottom:5rem"><div class="obj-grid">${objects.map((o,i) => `<a class="${i===0?"span2":""}" href="${BASE}/objects/${o.slug}" data-link>
+  <section class="wrap" style="padding-bottom:5rem"><div class="obj-grid">${objects.map((o,i) => `<a class="${i===0?"span2":""}" href="#/objects/${o.slug}" data-link>
     <img src="${img(o.image)}" alt="${o.title}" style="aspect-ratio:${i===0?"16/8":"16/10"};width:100%;object-fit:cover">
     <p class="meta" style="margin-top:1rem">${o.place} · ${o.year}</p>
     <h2 class="title" style="margin-top:.25rem">${o.title}</h2>
@@ -311,7 +315,7 @@ function pageObject(slug) {
   if (!o) return page404();
   const others = objects.filter((x) => x.slug !== slug).slice(0, 3);
   return `<section class="page-hero"><img src="${img(o.image)}" alt=""><div class="shade"></div>
-    <div class="inner wrap"><a class="meta" href="${BASE}/objects" data-link>← Все объекты</a>
+    <div class="inner wrap"><a class="meta" href="#/objects" data-link>← Все объекты</a>
       <h1 class="display" style="margin-top:1rem;max-width:20ch">${o.title}</h1>
       <p style="margin-top:1rem;opacity:.85">${o.place} · ${o.year} · ${meters(o.area)}</p></div></section>
   <section class="section wrap grid-12">
@@ -324,8 +328,8 @@ function pageObject(slug) {
   </section>
   <section class="wrap gallery" style="padding-bottom:4rem">${o.gallery.map((g) => `<img class="cover" src="${img(g)}" alt="">`).join("")}</section>
   <section class="section" style="border-top:1px solid var(--border)"><div class="wrap">
-    <div class="flex-end"><h2 class="headline">Ещё объекты</h2><a class="btn btn-outline" href="${BASE}/contacts" data-link>Похожий объект</a></div>
-    <div class="cards" style="margin-top:2rem">${others.map((x) => `<a href="${BASE}/objects/${x.slug}" data-link>
+    <div class="flex-end"><h2 class="headline">Ещё объекты</h2><a class="btn btn-outline" href="#/contacts" data-link>Похожий объект</a></div>
+    <div class="cards" style="margin-top:2rem">${others.map((x) => `<a href="#/objects/${x.slug}" data-link>
       <img class="cover" src="${img(x.image)}" alt=""><h3 class="title" style="margin-top:.75rem">${x.title}</h3>
       <p class="muted" style="margin-top:.35rem;font-size:.9rem">${meters(x.area)}</p></a>`).join("")}</div>
   </div></section>`;
@@ -350,7 +354,7 @@ function pageAbout() {
   <section class="paper section"><div class="wrap"><p class="meta">Реквизиты</p>
     <p class="title" style="margin-top:1rem">${company.address}</p>
     <p class="muted" style="margin-top:.5rem">${company.addressNote}<br>ИНН ${company.inn} · ОГРН ${company.ogrn}</p>
-    <a class="btn btn-ink" href="${BASE}/contacts" data-link style="margin-top:2rem">Связаться</a></div></section>`;
+    <a class="btn btn-ink" href="#/contacts" data-link style="margin-top:2rem">Связаться</a></div></section>`;
 }
 
 function pageContacts() {
@@ -380,20 +384,20 @@ function page404() {
     <p class="meta" style="color:var(--blade)">404</p>
     <h1 class="display" style="margin-top:1rem">Такой карты нет</h1>
     <p class="muted" style="margin-top:1.5rem;max-width:24rem">Страница не найдена. Пол на месте — просто не тот пролёт.</p>
-    <a class="btn btn-blade" href="${BASE}/" data-link style="margin-top:2.5rem;align-self:flex-start">На главную</a>
+    <a class="btn btn-blade" href="#/" data-link style="margin-top:2.5rem;align-self:flex-start">На главную</a>
   </section>`;
 }
 
 function bind() {
   document.querySelectorAll("[data-link]").forEach((a) => {
     a.addEventListener("click", (e) => {
-      const href = a.getAttribute("href");
-      if (!href || href.startsWith("http") || href.startsWith("tel") || href.startsWith("mailto")) return;
+      const href = a.getAttribute("href") || "";
+      if (!href.startsWith("#")) return;
       e.preventDefault();
-      const url = href.replace(location.origin, "");
-      const [p, hash] = url.split("#");
-      go(p.replace(BASE, "") || "/");
-      if (hash) setTimeout(() => document.getElementById(hash)?.scrollIntoView(), 50);
+      document.getElementById("mnav")?.classList.remove("show");
+      document.documentElement.classList.remove("nav-open");
+      go(href.slice(1) || "/");
+      window.scrollTo(0, 0);
     });
   });
   const burger = document.getElementById("burger");
@@ -470,5 +474,8 @@ function render() {
   if (hash) setTimeout(() => document.getElementById(hash)?.scrollIntoView(), 40);
 }
 
-window.addEventListener("popstate", render);
+window.addEventListener("hashchange", () => {
+  window.scrollTo(0, 0);
+  render();
+});
 render();
