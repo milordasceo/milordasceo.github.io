@@ -2,11 +2,9 @@
 
 Сайт компании по устройству промышленных бетонных полов методом стопинга.
 
-## Открыть (работает из России)
+## Открыть
 
-**Сайт:** https://cdn.jsdelivr.net/gh/milordasceo/sinie-lopasti@main/index.html
+- Основной сайт: https://milordasceo.github.io/
+- Превью в папке `preview/`: https://milordasceo.github.io/preview/
 
-Репозиторий: https://github.com/milordasceo/sinie-lopasti
-
-Если GitHub Pages включён в настройках репозитория (Settings → Pages → Deploy from branch `main`):  
-https://milordasceo.github.io/sinie-lopasti/
+Репозиторий: https://github.com/milordasceo/milordasceo.github.io

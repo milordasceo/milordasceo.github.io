@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Контакты — Синие лопасти</title>
+  <meta name="theme-color" content="#0A0C10">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+  <header class="header solid">
+    <div class="header-inner">
+      <a class="brand" href="index.html">
+        <svg viewBox="0 0 32 32" fill="currentColor"><circle cx="16" cy="16" r="2.35"/><path d="M14.35 3.4h3.3c.55 0 .95.45.95 1v8.55c0 .7-.55 1.2-1.25 1.2h-2.7c-.7 0-1.25-.5-1.25-1.2V4.4c0-.55.4-1 .95-1Z"/><path d="M14.35 3.4h3.3c.55 0 .95.45.95 1v8.55c0 .7-.55 1.2-1.25 1.2h-2.7c-.7 0-1.25-.5-1.25-1.2V4.4c0-.55.4-1 .95-1Z" transform="rotate(90 16 16)"/><path d="M14.35 3.4h3.3c.55 0 .95.45.95 1v8.55c0 .7-.55 1.2-1.25 1.2h-2.7c-.7 0-1.25-.5-1.25-1.2V4.4c0-.55.4-1 .95-1Z" transform="rotate(180 16 16)"/><path d="M14.35 3.4h3.3c.55 0 .95.45.95 1v8.55c0 .7-.55 1.2-1.25 1.2h-2.7c-.7 0-1.25-.5-1.25-1.2V4.4c0-.55.4-1 .95-1Z" transform="rotate(270 16 16)"/></svg>
+        <span class="wordmark">Синие лопасти</span>
+      </a>
+      <nav class="nav-desk"><a href="objects.html">Объекты</a><a href="technology.html">Технология</a><a class="active" href="contacts.html">Контакты</a></nav>
+      <div class="header-actions">
+        <a class="phone-desk" href="tel:+73833124010">+7 (383) 312-40-10</a>
+        <a class="btn btn-primary btn-smeta-desk" href="contacts.html">Смета</a>
+        <button class="menu-btn" id="menuBtn" type="button" aria-label="Открыть меню">☰</button>
+      </div>
+    </div>
+  </header>
+  <div class="menu" id="menu">
+    <nav>
+      <a href="objects.html">Объекты</a>
+      <a href="technology.html">Технология</a>
+      <a href="contacts.html">Контакты</a>
+      <a href="index.html#smeta">Смета</a>
+    </nav>
+    <a class="call" href="tel:+73833124010">+7 (383) 312-40-10</a>
+  </div>
+
+  <main class="page">
+    <div class="wrap split split-5-7">
+      <div>
+        <p class="kicker">Контакты</p>
+        <h1 class="title">Позвоните или оставьте объект</h1>
+        <p class="muted">Отвечаем в рабочие часы. Если бетон уже в графике — пишите сразу: окно стопинга не ждёт.</p>
+        <div class="contact-row"><span>☎</span><div><a href="tel:+73833124010">+7 (383) 312-40-10</a><div class="muted" style="font-size:0.9rem">Пн–Сб 08:00–19:00</div></div></div>
+        <div class="contact-row"><span>✉</span><div><a href="mailto:hello@siniolopasti.ru">hello@siniolopasti.ru</a></div></div>
+        <div class="contact-row"><span>⌖</span><div>Новосибирск, ул. Станционная, 60/1<br><span class="muted" style="font-size:0.9rem">Выезд: Сибирь и Урал</span></div></div>
+        <dl class="spec" style="margin-top:2rem">
+          <div><dt>Юрлицо</dt><dd>ООО «Синие лопасти»</dd></div>
+          <div><dt>ИНН</dt><dd>5408123456</dd></div>
+          <div><dt>Город</dt><dd>Новосибирск</dd></div>
+        </dl>
+      </div>
+      <form class="form" id="quoteForm">
+        <p class="kicker">Предварительный счёт</p>
+        <h3>Площадь и смесь — вилка по рынку Сибири</h3>
+        <div style="margin-top:1.5rem">
+          <div style="display:flex;justify-content:space-between;align-items:end">
+            <label for="area">Площадь</label>
+            <b class="display" id="areaVal" style="font-size:1.5rem">4 200 м²</b>
+          </div>
+          <input id="area" type="range" min="300" max="30000" step="100" value="4200">
+        </div>
+        <fieldset style="border:0;padding:0;margin:1.5rem 0 0">
+          <legend>Смесь</legend>
+          <div id="mixes"></div>
+        </fieldset>
+        <div class="est">
+          <p class="kicker">Ориентир</p>
+          <b id="estVal">—</b>
+          <p class="muted" style="font-size:0.75rem;margin:0.25rem 0 0">Без НДС, без основания и разметки.</p>
+        </div>
+        <div class="fields fields-2">
+          <div><label for="name">Имя</label><input id="name" name="name" autocomplete="name" placeholder="Как к вам обращаться"></div>
+          <div><label for="phone">Телефон</label><input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+7"></div>
+        </div>
+        <div style="margin-top:1rem"><label for="message">Объект</label><textarea id="message" name="message" placeholder="Город, что за здание, когда бетон"></textarea></div>
+        <button class="btn btn-primary btn-lg" type="submit" style="margin-top:1.25rem">Отправить заявку</button>
+      </form>
+    </div>
+  </main>
+  <script src="js/site.js"></script>
+</body>
+</html>
